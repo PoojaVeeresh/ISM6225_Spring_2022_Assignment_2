@@ -9,6 +9,7 @@ WRITE YOUR CODE IN THE RESPECTIVE QUESTION FUNCTION BLOCK
 using System;
 using System.Collections.Generic;
 
+
 namespace ISM6225_Assignment_2_Spring_2022
 {
     class Program
@@ -132,7 +133,23 @@ namespace ISM6225_Assignment_2_Spring_2022
         {
             try
             {
-                //Write your Code here.
+                
+             //sorting method 
+                var lo = 0;
+                var hi = nums.Length - 1;
+
+
+                while (hi - lo >= 0)
+                {
+                    int v = (hi + lo) / 2;
+                    var mid = v;
+                    if (nums[v] == target)
+                        return v;
+                    else if (nums[v] < target)
+                        lo = v + 1;
+                    else if (nums[v] > target)
+                        hi = v - 1;
+                }
                 return -1;
             }
             catch (Exception)
@@ -163,17 +180,56 @@ namespace ISM6225_Assignment_2_Spring_2022
         {
             try
             {
-                
-                //write your code here.
+             
+                 if (paragraph == null || paragraph.Length == 0)
+                        {
+                            return "";
+                        }
+                        HashSet<string> ban = new HashSet<string>();
+                        foreach (var word in banned)
+                        {
+                            ban.Add(word);
+                        }
 
-                return "";
-            }
-            catch (Exception)
-            {
+                        Dictionary<string, int> count = new Dictionary<string, int>();
+                        paragraph = Regex.Replace(paragraph, @"[^\w\d\s]", " ");
+                        string[] words = paragraph.Split(" ");
+                        foreach (var wrd in words)
+                        {
+                            var word = wrd.ToLower();
+                            if (count.ContainsKey(word) && !ban.Contains(word))
+                            {
+                                count[word]++;
+                            }
+                            else if (!count.ContainsKey(word) && !ban.Contains(word))
+                            {
+                                count.Add(word, 1);
+                            }
+                        }
 
-                throw;
+                        KeyValuePair<string, int> kvp = new KeyValuePair<string, int>("", -1);
+                        foreach (var kv in count)
+                        {
+                            Console.WriteLine(kv.Key + " " + kv.Value);
+                            if (kv.Value > kvp.Value && kv.Key != "")
+                            {
+                                kvp = kv;
+                            }
+                        }
+
+                        return kvp.Key;
+                    }
+            
+            
+                catch (Exception)
+                {
+
+                    throw;
+                }
             }
-        }
+             
+
+               
 
         /*
         Question 3:
@@ -201,8 +257,34 @@ namespace ISM6225_Assignment_2_Spring_2022
             try
             {
                 //write your code here.
-                return 0;
-            }
+             IDictionary<int, int> val2Count = new Dictionary<int, int>();
+                    foreach (var num in arr)
+                    {
+                        if (!val2Count.ContainsKey(num))
+                        {
+                            val2Count[num] = 0;
+                        }
+
+                        val2Count[num]++;
+                    }
+
+                    if (val2Count.Count == 0)
+                    {
+                        return -1;
+                    }
+
+                    int res = -1;
+
+                    foreach (var p in val2Count)
+                    {
+                        if (p.Key == p.Value)
+                        {
+                            res = Math.Max(res, p.Value);
+                        }
+                    }
+
+                    return res;
+             
             catch (Exception)
             {
 
